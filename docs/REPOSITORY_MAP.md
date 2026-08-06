@@ -1,0 +1,11 @@
+# Repository Map
+- `agents/`: specialist agent skills and orchestration instructions
+- `.copilot/skills/`: entry-point skills for IDE discovery
+- `src/main/java`: reusable framework implementation
+- `src/test/java`: hooks, runners, and step definitions
+- `src/test/resources/features`: BDD specifications by test layer
+- `config/`: environment and device capability templates
+- `python_tools/`: data generation and result analysis utilities
+- `.github/workflows/`: pull-request and scheduled pipelines
+- `docker/` and `docker-compose.yml`: reproducible dependencies
+- `docs/`: architecture, standards, onboarding, and runbooks

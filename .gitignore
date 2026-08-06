@@ -1,0 +1,114 @@
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Node/npm
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-error.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+.venv
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# Java/Maven
+target/
+.classpath
+.project
+.settings/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+.m2/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.iml
+.*.swp
+.*.swo
+*.sublime-workspace
+.netbeans/
+
+# Build Artifacts
+dist/
+build/
+out/
+*.o
+*.a
+
+# Logs
+*.log
+logs/
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Docker
+.dockerignore
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# Local Development
+local.properties
+.idea/workspace.xml
+.idea/tasks.xml
+*.swp
+*.swo

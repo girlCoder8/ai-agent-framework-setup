@@ -1,0 +1,3 @@
+package com.acme.framework.db;
+import java.sql.*; import java.util.*;
+public final class DatabaseClient implements AutoCloseable { private final Connection c; public DatabaseClient(String url,String user,String password) throws SQLException {c=DriverManager.getConnection(url,user,password);} public List<Map<String,Object>> query(String sql) throws SQLException {try(Statement s=c.createStatement();ResultSet r=s.executeQuery(sql)){List<Map<String,Object>> out=new ArrayList<>();ResultSetMetaData m=r.getMetaData();while(r.next()){Map<String,Object> row=new LinkedHashMap<>();for(int i=1;i<=m.getColumnCount();i++)row.put(m.getColumnLabel(i),r.getObject(i));out.add(row);}return out;}} public void close() throws SQLException{c.close();}}
