@@ -13,6 +13,7 @@
     <restassured.version>5.5.0</restassured.version>
     <appium.version>9.3.0</appium.version>
     <allure.version>2.29.0</allure.version>
+    <jna.version>5.19.1</jna.version>
   </properties>
 
   <dependencies>
@@ -31,6 +32,19 @@
       <groupId>io.appium</groupId>
       <artifactId>java-client</artifactId>
       <version>${appium.version}</version>
+    </dependency>
+    <!-- Pinned explicitly: appium/selenium pull JNA transitively, but a
+         version conflict was causing it to resolve incorrectly/missing
+         at runtime (NoClassDefFoundError: com/sun/jna/FunctionMapper) -->
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>${jna.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna-platform</artifactId>
+      <version>${jna.version}</version>
     </dependency>
 
     <!-- Test-only dependencies (src/test/java) -->
