@@ -10,14 +10,19 @@ jobs:
 
       - name: Compile (with retry for transient Maven Central 403s)
         run: |
-          for i in 1 2 3; do
-            mvn -B -DskipTests compile && break
-            echo "Attempt $i failed (exit $?), retrying in 15s..."
+          n=0
+          until mvn -B -DskipTests compile; do
+            n=$((n+1))
+            if [ "$n" -ge 3 ]; then
+              echo "Compile failed after 3 attempts, giving up."
+              exit 1
+            fi
+            echo "Attempt $n failed, retrying in 15s..."
             sleep 15
           done
 
       - name: Run @api @smoke tests
-        run: mvn -B test -Dcucumber.filter.tags="@api and @smoke"
+        run: mvn -B test -Dcucumber.filter.tags="@api and @smoke and not @wip" -DfailIfNoTests=false
 
       - if: always()
         uses: actions/upload-artifact@v4

@@ -6,13 +6,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 /**
  * Factory for Selenium WebDriver instances.
- *
+ * <p>
  * Headless mode is controlled by the HEADLESS environment variable and
  * defaults to true — this matters because ubuntu-latest GitHub Actions
  * runners have no display, so a non-headless ChromeDriver session will
  * fail to start there. Set HEADLESS=false locally if you want to watch
  * the browser run.
- *
+ * <p>
  * This is a from-scratch implementation matching the createDriver()
  * call already wired into WebLoginSteps — replace whatever currently
  * exists at this path with this version.
