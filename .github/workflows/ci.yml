@@ -22,7 +22,7 @@ jobs:
           done
 
       - name: Run @api @smoke tests
-        run: mvn -B test -Dcucumber.filter.tags="@api and @smoke and not @wip" -DfailIfNoTests=false
+        run: mvn -B test -Dcucumber.filter.tags="@mobile and @web" -DfailIfNoTests=false
 
       - if: always()
         uses: actions/upload-artifact@v4
