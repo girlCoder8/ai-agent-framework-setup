@@ -14,7 +14,7 @@
         <selenium.version>4.27.0</selenium.version>
         <restassured.version>5.5.0</restassured.version>
         <appium.version>9.3.0</appium.version>
-        <allure.version>2.29.0</allure.version>
+       <allure.version>2.29.1</allure.version>
         <aspectj.version>1.9.25.1</aspectj.version>
         <jna.version>5.19.1</jna.version>
         <slf4j.version>2.0.16</slf4j.version>
@@ -132,11 +132,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-cucumber7-jvm</artifactId>
-            <version>${allure.version}</version>
-            <scope>test</scope>
-        </dependency>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-cucumber7-jvm</artifactId>
+        <version>${allure.version}</version>
+        <scope>test</scope>
+    </dependency>
     </dependencies>
 
     <build>
