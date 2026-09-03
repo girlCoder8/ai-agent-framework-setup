@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  *     (headless mode, options, etc. handled internally).
  *   - Login page URL is read from an env var so this works across
  *     environments without hardcoding.
- * Adjust method name/signature to match the real factory API if different.
- *
+ * Adjust the method name / signature to match the real factory API if different.
+ * <p>
  * This scenario is tagged @web and is currently excluded from the
  * main CI run (filter: "not @mobile and not @web"), so it won't execute
  * in the pipeline yet — but it needs to compile.

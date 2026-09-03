@@ -26,7 +26,8 @@ jobs:
       wiremock:
         image: wiremock/wiremock:3.9.1
         ports:
-          - 8080:8080
+          - 8080:8080   # API_BASE_URL target
+          - 3000:8080   # same WireMock instance, also exposed as the web app's port
         options: >-
           --health-cmd="wget -qO- http://localhost:8080/__admin/health || exit 1"
           --health-interval=10s
@@ -65,7 +66,7 @@ jobs:
             sleep 15
           done
 
-      - name: Stub health endpoint in WireMock
+      - name: Stub health and login endpoints in WireMock
         run: |
           curl -s -X POST http://localhost:8080/__admin/mappings \
             -H "Content-Type: application/json" \
@@ -74,16 +75,27 @@ jobs:
               "response": { "status": 200, "jsonBody": { "status": "UP" } }
             }'
 
+          curl -s -X POST http://localhost:8080/__admin/mappings \
+            -H "Content-Type: application/json" \
+            -d '{
+              "request": { "method": "GET", "url": "/login" },
+              "response": {
+                "status": 200,
+                "headers": { "Content-Type": "text/html" },
+                "body": "<html><head><title>Login</title></head><body><form id=\"login\"><input name=\"username\"/><input name=\"password\" type=\"password\"/><button type=\"submit\">Log in</button></form></body></html>"
+              }
+            }'
+
       - name: Run core tests (not @mobile, not @web)
         run: |
           mvn -B test \
             -Dcucumber.filter.tags="not @mobile and not @web" \
             -DfailIfNoTests=false
 
-      - name: Run @mobile or @web tests
+      - name: Run @web tests
         run: |
           mvn -B test \
-            -Dcucumber.filter.tags="@mobile or @web" \
+            -Dcucumber.filter.tags="@web" \
             -DfailIfNoTests=false
 
       - name: Upload Allure results
