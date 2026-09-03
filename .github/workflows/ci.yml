@@ -8,6 +8,37 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      oracle:
+        image: gvenzl/oracle-xe:21-slim
+        env:
+          ORACLE_PASSWORD: test
+          APP_USER: test
+          APP_USER_PASSWORD: test
+        ports:
+          - 1521:1521
+        options: >-
+          --health-cmd="healthcheck.sh"
+          --health-interval=10s
+          --health-timeout=10s
+          --health-retries=10
+
+      wiremock:
+        image: wiremock/wiremock:3.9.1
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd="wget -qO- http://localhost:8080/__admin/health || exit 1"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      DB_URL: "jdbc:oracle:thin:@//localhost:1521/XEPDB1"
+      DB_USER: test
+      DB_PASSWORD: test
+      API_BASE_URL: http://localhost:8080
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,10 +65,25 @@ jobs:
             sleep 15
           done
 
-      - name: Run @mobile and @web tests
+      - name: Stub health endpoint in WireMock
+        run: |
+          curl -s -X POST http://localhost:8080/__admin/mappings \
+            -H "Content-Type: application/json" \
+            -d '{
+              "request": { "method": "GET", "url": "/health" },
+              "response": { "status": 200, "jsonBody": { "status": "UP" } }
+            }'
+
+      - name: Run core tests (not @mobile, not @web)
         run: |
           mvn -B test \
-            -Dcucumber.filter.tags="@mobile and @web" \
+            -Dcucumber.filter.tags="not @mobile and not @web" \
+            -DfailIfNoTests=false
+
+      - name: Run @mobile or @web tests
+        run: |
+          mvn -B test \
+            -Dcucumber.filter.tags="@mobile or @web" \
             -DfailIfNoTests=false
 
       - name: Upload Allure results
